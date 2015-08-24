@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Require-Bundle: com.dynatrace.diagnostics.sdk
+Bundle-Vendor: Dynatrace
+Bundle-ClassPath: .,lib/commons-compress-1.10.jar,lib/commons-io-2.4.j
+ ar,lib/commons-lang3-3.1.jar,lib/commons-logging-1.2.jar
+Bundle-Version: 1.0.0
+Bundle-Name: JMX Enhanced Monitor
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.dynatrace.diagnostics.plugin.jmx;singleton:=t
+ rue
+

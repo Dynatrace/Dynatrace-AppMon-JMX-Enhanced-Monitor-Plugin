@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 6.2.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.dynatrace.diagnostics.plugin.jmx" name="JMX Enhanced Monitor">
+    <information>
+      <category value="" />
+      <displayname value="JMX Enhanced Monitor" />
+      <description value="Gather JMX metrics from different JMX servers" />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+      <property key="isTask" label="Is Plugin a Task?" type="boolean" description="True if plugin will be running as a task, otherwise it is false. Default is false." default="false" />
+      <property key="pluginId" label="Plugin Instance Id" type="string" description="String which identifies plugin's instance" default="" multiline="false" />
+      <property key="isCustomJmxUrlInd" label="Is Custom JMX service URL?" type="boolean" description="True if plugin will be using custom JMX URL, otherwise it is false. Default is false." default="false" />
+      <property key="jmxHost" label="JMX Host" type="string" description="JMX Host" default="" multiline="false">
+        <visibility>
+          <rule key="isTask" value="true" />
+        </visibility>
+      </property>
+      <property key="jmxPort" label="JMX Port" type="long" description="JMX Port" default="1099">
+        <visibility>
+          <rule key="isCustomJmxUrlInd" value="false" />
+        </visibility>
+      </property>
+      <property key="urlPath" label="URL Path" type="string" description="The URL Path portion of the JMX service URL" default="" multiline="false">
+        <visibility>
+          <rule key="isCustomJmxUrlInd" value="false" />
+        </visibility>
+      </property>
+      <property key="customJmxUrl" label="Custom JMX Service URL" type="string" description="String which contains custom JMX service URL" default="" multiline="false">
+        <visibility>
+          <rule key="isCustomJmxUrlInd" value="true" />
+        </visibility>
+      </property>
+      <property key="jmxServerType" label="JMX Server Type" type="list" description="Type of the JMX serer to gather metrics" default="Cloud Foundry Ops Metrics Tool">
+        <list>
+          <item value="Cloud Foundry Ops Metrics Tool" />
+          <item value="JVM" />
+          <item value="WebSphere" />
+          <item value="Weblogic" />
+          <item value="JBoss" />
+        </list>
+      </property>
+      <property key="isAuthenticationOn" label="Is Authentication On?" type="boolean" description="Boolean indicator: true when authentication is required, otherwise it is false." default="false" />
+      <property key="user" label="User" type="string" description="User name" default="" multiline="false">
+        <visibility>
+          <rule key="isAuthenticationOn" value="true" />
+        </visibility>
+      </property>
+      <property key="password" label="Password" type="password" description="Password of a given user" default="">
+        <visibility>
+          <rule key="isAuthenticationOn" value="true" />
+        </visibility>
+      </property>
+      <property key="includeMBeansPatterns" label="Include MBeans Patterns" type="string" description="JSON file with MBean patterns which will be gathered by the plugin" default="" multiline="true" />
+      <property key="excludeMBeansPatterns" label="Exclude MBeans Patterns" type="string" description="JSON file with MBean patterns which will be excluded from the list of gathered by the plugin metrics" default="" multiline="true" />
+      <property key="dirJar" label="Metric Group Plugin Directory" type="string" description="File directory where to put the Metric Group Plugin files associated with the JMX Enhanced Monitor Plugin" default="" multiline="false">
+        <visibility>
+          <rule key="isTask" value="true" />
+        </visibility>
+      </property>
+      <property key="version" label="Version of the Metric Group Plugin" type="string" description="Version of the plugin which will be built by the task" default="1.0.0" multiline="false">
+        <visibility>
+          <rule key="isTask" value="true" />
+        </visibility>
+      </property>
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.diagnostics.plugin.jmx.monitor" name="JMX Enhanced Monitor Plugin">
+    <plugin configid="com.dynatrace.diagnostics.plugin.jmx" class="com.dynatrace.diagnostics.plugin.jmx.JMXMonitor" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.diagnostics.plugin.jmx.monitor.dummymetricgroup" name="Dummy Metric Group">
+    <metricgroup monitorid="com.dynatrace.diagnostics.plugin.jmx.monitor">
+      <metric defaultrate="purepath" name="dummyMetric" unit="ms" description="Dummy Metric" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.task" id="com.dynatrace.diagnostics.plugin.jmx.task" name="JMX Enhanced Task Plugin">
+    <plugin configid="com.dynatrace.diagnostics.plugin.jmx" class="com.dynatrace.diagnostics.plugin.jmx.JMXTask" />
+  </extension>
+</plugin>
